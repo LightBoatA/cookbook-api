@@ -1,0 +1,14 @@
+# 忽略虚拟环境文件夹
+env/
+
+# 忽略编译后的缓存文件
+__pycache__/
+
+# 忽略用户上传的文件（如有）
+uploads/
+
+# 忽略数据库文件
+data.db
+
+# 忽略迁移版本文件（如有）
+# migrations/versions/

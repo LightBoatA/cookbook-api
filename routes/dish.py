@@ -16,8 +16,7 @@ def generate_unique_filename(extension):
     return f"{unique_id}{extension}"
 
 # 设置上传文件的存储路径
-# UPLOAD_FOLDER = 'uploads'
-current_app.config['UPLOAD_FOLDER'] = os.path.join(current_app.root_path, 'uploads')
+# current_app.config['UPLOAD_FOLDER'] = os.path.join(current_app.root_path, 'uploads')
 
 dish_bp = Blueprint('dish', __name__)
 
@@ -70,6 +69,7 @@ def delete_dish(dish_id):
 
 @dish_bp.route('/upload', methods=['POST'])
 def upload_image():
+    print(request.files)
     if 'image' not in request.files:
         return jsonify({'error': 'No image file'}), 400
     file = request.files['image']
@@ -82,10 +82,11 @@ def upload_image():
 
         # 文件保存路径
         upload_folder = current_app.config['UPLOAD_FOLDER']
+        # upload_folder = os.path.join(current_app.root_path, 'uploads')
         
         # 如果文件夹不存在，创建它
-        if not os.path.exists(upload_folder):
-            os.makedirs(upload_folder)
+        # if not os.path.exists(upload_folder):
+        #     os.makedirs(upload_folder)
 
         filepath = os.path.join(upload_folder, filename)
         file.save(filepath)
@@ -93,12 +94,13 @@ def upload_image():
         # 返回文件路径（相对服务器根目录的路径）
         return jsonify({
             'message': 'File uploaded successfully',
-            'location': f'/uploads/{filename}'
+            # 'location': f'/uploads/{filename}'
+            'location': f'/{filename}'
         }), 200
     else:
         return jsonify({'error': 'Invalid file type'}), 400
 
 # 静态文件接口
-@dish_bp.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
+# @dish_bp.route('/uploads/<filename>')
+# def uploaded_file(filename):
+#     return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)

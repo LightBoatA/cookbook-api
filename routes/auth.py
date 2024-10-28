@@ -20,4 +20,4 @@ def login():
   user = User.query.filter_by(username=data['username']).first()
   if not user:
     return jsonify({'error': 'User not found'}), 404
-  return jsonify({'message': 'Login successful', 'user': user.username}), 200
+  return jsonify({'message': 'Login successful', 'user_id': user.id}), 200
